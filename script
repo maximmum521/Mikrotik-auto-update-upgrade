@@ -10,19 +10,13 @@
 :local TasckUpgrade true;
 :local AutoUpdate true;
 #####
-# router Name
+# router info
 #####
 :local Name [/system identity get name];
-#####
-# package version check 
-#####
 :local Cheking [/system package update check-for-updates as-value];
 :local Stat ($Cheking -> "status");
 :local CurrentVer ($Cheking -> "installed-version");
 :local NewVer ($Cheking -> "latest-version");
-#####
-# routerbord version check
-#####
 :local Model [/system routerboard get model];
 :local Factory  [/system routerboard get factory-firmware];
 #####

@@ -10,26 +10,20 @@ add dont-require-permissions=no name=UpdateUpgrade policy=\
     \n#####\r\
     \n:local BotId \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx\";\r\
     \n:local ChatId \"xxxxxx\";\r\
-    \n#####\r\
+        \n#####\r\
     \n# script setings\r\
     \n#####\r\
     \n:local SendStatus true;\r\
     \n:local TasckUpgrade true;\r\
     \n:local AutoUpdate true;\r\
     \n#####\r\
-    \n# router Name\r\
+    \n# router info\r\
     \n#####\r\
     \n:local Name [/system identity get name];\r\
-    \n#####\r\
-    \n# package version check \r\
-    \n#####\r\
     \n:local Cheking [/system package update check-for-updates as-value];\r\
     \n:local Stat (\$Cheking -> \"status\");\r\
     \n:local CurrentVer (\$Cheking -> \"installed-version\");\r\
     \n:local NewVer (\$Cheking -> \"latest-version\");\r\
-    \n#####\r\
-    \n# routerbord version check\r\
-    \n#####\r\
     \n:local Model [/system routerboard get model];\r\
     \n:local Factory  [/system routerboard get factory-firmware];\r\
     \n#####\r\
@@ -49,9 +43,9 @@ add dont-require-permissions=no name=UpdateUpgrade policy=\
     \n\t# auto make task upgrade\r\
     \n\t#####\r\
     \n\t:if (\$TasckUpgrade = true) do={\r\
-    \n\t\t/system schedule add name=UPGRADE on-event=\":delay 5s; /system sche\
-    duler remove UPGRADE; :delay 30s; /system routerboard upgrade; :delay 30s;\
-    \_/system reboot;\" start-time=startup interval=0;\r\
+    \n\t\t/system schedule add name=UPGRADE on-event=\":delay 10s; /system sch\
+    eduler remove UPGRADE; :delay 30s; /system routerboard upgrade; :delay 30s\
+    ; /system reboot;\" start-time=startup interval=0;\r\
     \n\t}\r\
     \n\t#####\r\
     \n\t# update\r\
@@ -60,4 +54,5 @@ add dont-require-permissions=no name=UpdateUpgrade policy=\
     \n\t\t/system package update install;\r\
     \n\t}\r\
     \n}\r\
+    \n\r\
     \n"
