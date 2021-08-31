@@ -9,7 +9,7 @@
 import script.rsc
 ```
 
-Change in script "/system script" BotId and ChatId on your own Telegram Bot ID and Chat ID 
+Change in script "/system script UpdateUpgrade" BotId and ChatId on your own Telegram Bot ID and Chat ID 
 
     :local BotId "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; 
     :local ChatId "xxxxxx";
