@@ -1,0 +1,50 @@
+#####
+# telegram setings 
+#####
+:local BotId "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+:local ChatId "xxxxxx";
+#####
+# script setings
+#####
+:local SendStatus true;
+:local TasckUpgrade true;
+:local AutoUpdate true;
+#####
+# router Name
+#####
+:local Name [/system identity get name];
+#####
+# package version check 
+#####
+:local Cheking [/system package update check-for-updates as-value];
+:local Stat ($Cheking -> "status");
+:local CurrentVer ($Cheking -> "installed-version");
+:local NewVer ($Cheking -> "latest-version");
+#####
+# routerbord version check
+#####
+:local Model [/system routerboard get model];
+:local Factory  [/system routerboard get factory-firmware];
+#####
+# send status
+#####
+:if ($SendStatus = true) do={        
+	/tool fetch url="https://api.telegram.org/bot$BotId/sendMessage\?chat_id=$ChatId&text=$Name %0a$Model %0a$Stat %0aCurrent version=$CurrentVer %0aAvailable version=$NewVer %0aFactory firmware=$Factory" keep-result=no;
+}
+#####
+# MAIN SCRIPT
+#####
+:if ($CurrentVer != $NewVer) do={
+	#####
+	# auto make task upgrade
+	#####
+	:if ($TasckUpgrade = true) do={
+		/system schedule add name=UPGRADE on-event=":delay 10s; /system scheduler remove UPGRADE; :delay 30s; /system routerboard upgrade; :delay 30s; /system reboot;" start-time=startup interval=0;
+	}
+	#####
+	# update
+	#####
+	:if ($AutoUpdate = true) do={
+		/system package update install;
+	}
+}
