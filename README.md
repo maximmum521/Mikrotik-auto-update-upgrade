@@ -8,16 +8,7 @@
 ```
 import script.rsc
 ```
-
-Change in script "/system script UpdateUpgrade" BotId and ChatId on your own Telegram Bot ID and Chat ID 
-
-```
-#####
-# telegram setings 
-#####
-:local BotId "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-:local ChatId "xxxxxx";
-```
+  
     
 ### Manual install
 
@@ -25,7 +16,11 @@ Make [script](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update
 
 Generate periodic task in "/system scheduler"
 
+
+### Setings script
+
 Change in script BotId and ChatId on your own Telegram Bot ID and Chat ID 
+
 ```
 #####
 # telegram setings 
@@ -33,8 +28,6 @@ Change in script BotId and ChatId on your own Telegram Bot ID and Chat ID
 :local BotId "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 :local ChatId "xxxxxx";
 ```
-
-### Setings script
 
 Edit this parameters default all enabled
 ```
