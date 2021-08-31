@@ -1,9 +1,9 @@
 /system scheduler
-add interval=1w name=UpdateUpgrade1 on-event="/system script run UpdateUpgrade1" \
+add interval=1w name=UpdateUpgrade on-event="/system script run UpdateUpgrade" \
     policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
     start-date=may/31/2021 start-time=10:00:00
 /system script
-add dont-require-permissions=no name=UpdateUpgrade1 policy=\
+add dont-require-permissions=no name=UpdateUpgrade policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="#\
     ####\r\
     \n# telegram setings \r\
