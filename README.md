@@ -16,7 +16,7 @@ Change in script "/system script" BotId and ChatId on your own Telegram Bot ID a
     
 ### Manual install
 
-Make [scrypt](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script) "/system script" 
+Make [script](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script) "/system script" 
 
 Generate periodic task in "/system scheduler"
 
