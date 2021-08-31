@@ -1,6 +1,6 @@
-# Mikrotik-auto-update-upgrade
+# Mikrotik auto update upgrade
 
-# Install from console 
+### Install from console 
 
 ```
 /tool fetch url="https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script.rsc"
