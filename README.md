@@ -29,7 +29,15 @@ Change in script BotId and ChatId on your own Telegram Bot ID and Chat ID
 :local ChatId "xxxxxx";
 ```
 
-Edit this parameters default all enabled
+Set your email address
+```
+#####
+# email setings
+#####
+:local Mail xxxxxxxxxxxxxxx;
+```
+
+Edit this parameters default 
 ```
 #####
 # script setings
@@ -37,6 +45,7 @@ Edit this parameters default all enabled
 :local SendStatus true;
 :local TasckUpgrade true;
 :local AutoUpdate true;
+:local SendBackup false;
 ```
 
 SendStatus - send notification to telegram 
@@ -44,3 +53,5 @@ SendStatus - send notification to telegram
 TasckUpgrade - run task auto update packages 
 
 TasckUpgrade - run task auto upgrade core firmware
+
+SendBackup - backup to email
