@@ -9,7 +9,7 @@
 :local SendStatus true;
 :local TasckUpgrade true;
 :local AutoUpdate true;
-:local SendBackup true;
+:local SendBackup false;
 #####
 # router info
 #####
