@@ -4,6 +4,10 @@
 :local BotId "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 :local ChatId "xxxxxx";
 #####
+# email setings
+#####
+:local Mail xxxxxxxxxxxxxxx;
+#####
 # script setings
 #####
 :local SendStatus true;
@@ -34,7 +38,17 @@
 	# send backup to email
 	#####
 	:if ($SendBackup = true) do={
-		/system script run SendBackup;
+		/export file=backup;
+		:delay 5s;
+		/system backup save name=backup;
+		:delay 5s;
+		/tool e-mail send to=$Mail subject="BACKUP" body="" file=backup.backup;
+		:delay 5s;
+		/tool e-mail send to=$Mail subject="BACKUP" body="" file=backup.rsc;
+		:delay 10s;
+		/file remove backup.backup;
+		/file remove backup.rsc;
+		:delay 10s;
 	}	
 	#####
 	# auto make task upgrade
