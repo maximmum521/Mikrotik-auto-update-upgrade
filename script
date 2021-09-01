@@ -9,6 +9,7 @@
 :local SendStatus true;
 :local TasckUpgrade true;
 :local AutoUpdate true;
+:local SendBackup true;
 #####
 # router info
 #####
@@ -29,6 +30,12 @@
 # MAIN SCRIPT
 #####
 :if ($CurrentVer != $NewVer) do={
+	#####
+	# send backup to email
+	#####
+	:if ($SendBackup = true) do={
+		/system script run SendBackup;
+	}	
 	#####
 	# auto make task upgrade
 	#####
