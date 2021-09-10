@@ -8,7 +8,9 @@
 ```
 import script.rsc
 ```
-  
+```
+/file remove script.rsc
+```  
     
 ### Manual install
 
