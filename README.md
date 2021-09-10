@@ -14,7 +14,7 @@ import script.rsc
     
 ### Manual install
 
-Make [script](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script) "/system script" 
+Make [this script](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script) in "/system script" 
 
 Generate periodic task in "/system scheduler"
 
