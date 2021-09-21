@@ -11,7 +11,7 @@ Change in script BotId and ChatId on your own Telegram Bot ID and Chat ID
 :local ChatId "xxxxxx";
 ```
 
-Set your email address
+Set your email address in SendBackup script
 ```
 #####
 # email setings
