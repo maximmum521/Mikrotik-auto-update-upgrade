@@ -52,6 +52,6 @@ import script.rsc
     
 ### Manual install
 
-Make [this script](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script) in "/system script" 
+Make in "/system script" UpdateUpgrade AfterUpgrade SendBackup 
 
-Generate periodic task in "/system scheduler"
+Generate periodic task in "/system scheduler" run script UpdateUpgrade
