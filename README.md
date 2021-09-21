@@ -1,26 +1,6 @@
 # Mikrotik auto update upgrade
 
-### Automate install from console 
-
-```
-/tool fetch url="https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script.rsc"
-```
-```
-import script.rsc
-```
-```
-/file remove script.rsc
-```  
-    
-### Manual install
-
-Make [this script](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script) in "/system script" 
-
-Generate periodic task in "/system scheduler"
-
-
 ### Setings script
-
 Change in script BotId and ChatId on your own Telegram Bot ID and Chat ID 
 
 ```
@@ -57,3 +37,21 @@ TasckUpgrade - run task auto update packages
 TasckUpgrade - run task auto upgrade core firmware
 
 SendBackup - backup to email
+
+### Automate install from console 
+
+```
+/tool fetch url="https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script.rsc"
+```
+```
+import script.rsc
+```
+```
+/file remove script.rsc
+```  
+    
+### Manual install
+
+Make [this script](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script) in "/system script" 
+
+Generate periodic task in "/system scheduler"
