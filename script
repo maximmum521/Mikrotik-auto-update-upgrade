@@ -24,6 +24,7 @@
 :local NewVer ($Cheking -> "latest-version");
 :local Model [/system routerboard get model];
 :local Factory  [/system routerboard get factory-firmware];
+:local Date [/system clock get date];
 #####
 # send status
 #####
@@ -42,9 +43,9 @@
 		:delay 5s;
 		/system backup save name=backup;
 		:delay 5s;
-		/tool e-mail send to=$Mail subject="BACKUP" body="" file=backup.backup;
+		/tool e-mail send to=$Mail subject="BACKUP $Date" body="$Name \n$Model" file=backup.backup;
 		:delay 5s;
-		/tool e-mail send to=$Mail subject="BACKUP" body="" file=backup.rsc;
+		/tool e-mail send to=$Mail subject="BACKUP $Date" body="$Name \n$Model" file=backup.rsc;
 		:delay 10s;
 		/file remove backup.backup;
 		/file remove backup.rsc;
