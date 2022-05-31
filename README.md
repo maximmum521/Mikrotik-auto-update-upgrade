@@ -30,3 +30,13 @@ Set your email address in SendBackup script
 #####
 :local Mail xxxxxxxxxxxxxxx;
 ```
+
+### Manual install
+
+Make in "/system script"
+ - [WakeUp](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/WakeUp) 
+ - [Update](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/Update) 
+ - [SendBackup](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/SendBackup) 
+
+Generate after poweron task in "/system scheduler" run scripts WakeUp
+Generate periodic task in "/system scheduler" run scripts Update
