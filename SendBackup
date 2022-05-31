@@ -1,24 +1,24 @@
+:log info "Start SendBackup scripts";
 #####
-# email setings
+# e-mail setings
 #####
 :local Mail xxxxxxxxxxxxxxx;
-#####
-# router info
-#####
-:local Name [/system identity get name];
-:local Model [/system routerboard get model];
-:local Date [/system clock get date];
+:global BackText;
 #####
 # job
 #####
 /export file=backup;
-:delay 5s;
+:delay 2s;
 /system backup save name=backup;
+:delay 2s;
+/log print file=log.txt;
+:delay 2s;
+/tool e-mail send to=$Mail \
+subject="BACKUP $[/system clock get date]" \
+body="$[/system identity get name] \n$[/system routerboard get model] \n$BackText"\
+file=backup.backup,backup.rsc,log.txt;
 :delay 5s;
-/tool e-mail send to=$Mail subject="BACKUP $Date" body="$Name \n$Model" file=backup.backup;
-:delay 5s;
-/tool e-mail send to=$Mail subject="BACKUP $Date" body="$Name \n$Model" file=backup.rsc;
-:delay 10s;
 /file remove backup.backup;
 /file remove backup.rsc;
-:delay 10s;
+/file remove log.txt;
+:delay 5s;

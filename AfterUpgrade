@@ -1,1 +1,0 @@
-/system schedule add name=AFTERUPGRADE on-event=":delay 10s; /system scheduler remove AFTERUPGRADE; :delay 30s; /system script run UpdateUpgrade;" start-time=startup interval=0;

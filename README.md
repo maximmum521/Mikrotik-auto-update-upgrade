@@ -30,31 +30,3 @@ Set your email address in SendBackup script
 #####
 :local Mail xxxxxxxxxxxxxxx;
 ```
-
-Edit this parameters default 
-```
-#####
-# script setings
-#####
-:local SendStatus true;
-:local TasckUpgrade true;
-:local AutoUpdate true;
-:local SendBackup false;
-```
-
-SendStatus - send notification to telegram 
-
-TasckUpgrade - run task auto update packages 
-
-TasckUpgrade - run task auto upgrade core firmware
-
-SendBackup - backup to email
-    
-### Manual install
-
-Make in "/system script"
- - [UpdateUpgrade](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/UpdateUpgrade) 
- - [AfterUpgrade](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/AfterUpgrade) 
- - [SendBackup](https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/SendBackup) 
-
-Generate periodic task in "/system scheduler" run script UpdateUpgrade
