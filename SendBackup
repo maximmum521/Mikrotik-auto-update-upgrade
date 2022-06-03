@@ -2,23 +2,19 @@
 #####
 # e-mail setings
 #####
-:local Mail xxxxxxxxxxxxxxx;
+:local Mail maximmum521@gmail.com;
 :global BackText;
 #####
 # job
 #####
 /export file=backup;
-:delay 2s;
 /system backup save name=backup;
-:delay 2s;
-/log print file=log.txt;
 :delay 2s;
 /tool e-mail send to=$Mail \
 subject="BACKUP $[/system clock get date]" \
 body="$[/system identity get name] \n$[/system routerboard get model] \n$BackText"\
-file=backup.backup,backup.rsc,log.txt;
+file=backup.backup,backup.rsc;
 :delay 5s;
 /file remove backup.backup;
 /file remove backup.rsc;
-/file remove log.txt;
 :delay 5s;
