@@ -107,18 +107,15 @@ add dont-require-permissions=no name=SendBackup policy=\
     \n# job\r\
     \n#####\r\
     \n/export file=backup;\r\
-    \n:delay 2s;\r\
     \n/system backup save name=backup;\r\
-    \n:delay 2s;\r\
-    \n/log print file=log.txt;\r\
-    \n:delay 2s;\r\
+    \n:delay 1s;\r\
     \n/tool e-mail send to=\$Mail \\\r\
     \nsubject=\"BACKUP \$[/system clock get date]\" \\\r\
     \nbody=\"\$[/system identity get name] \\n\$[/system routerboard get model\
     ] \\n\$BackText\"\\\r\
-    \nfile=backup.backup,backup.rsc,log.txt;\r\
-    \n:delay 5s;\r\
+    \nfile=backup.backup,backup.rsc;\r\
+    \n:delay 1s;\r\
     \n/file remove backup.backup;\r\
     \n/file remove backup.rsc;\r\
     \n/file remove log.txt;\r\
-    \n:delay 5s;"
+    \n:delay 1s;"
