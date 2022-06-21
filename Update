@@ -1,4 +1,3 @@
-:log info "Run Update script";
 #####
 # telegram setings 
 #####
@@ -40,7 +39,6 @@
 	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Model=[$Model] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NeedUpdate"	
 	:global BackText "UPDATE PACKAGE RUN BACKUP";
 	/system script run SendBackup;
-	:delay 5s;
 	/system package update install;
 } else={
 	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Model=[$Model] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NoNeedUpdate"
