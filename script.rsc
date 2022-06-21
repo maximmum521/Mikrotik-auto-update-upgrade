@@ -13,8 +13,9 @@ add dont-require-permissions=no name=WakeUp policy=\
     \n# settings\r\
     \n#####\r\
     \n:local Tag \"WakeUp\"\r\
-    \n:local BotId \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx\";\r\
-    \n:local ChatId \"xxxxxx\";\r\
+    \n/system script run TelegramSetings;\r\
+    \n:global BotId;\r\
+    \n:global ChatId;\r\
     \n:local Current [/system routerboard get current-firmware];\r\
     \n:local Upgrade [/system routerboard get upgrade-firmware];\r\
     \n#####\r\
@@ -38,8 +39,9 @@ add dont-require-permissions=no name=Update policy=\
     ####\r\
     \n# telegram setings \r\
     \n#####\r\
-    \n:local BotId \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx\";\r\
-    \n:local ChatId \"xxxxxx\";\r\
+    \n/system script run TelegramSetings;\r\
+    \n:global BotId;\r\
+    \n:global ChatId;\r\
     \n#####\r\
     \n# router info\r\
     \n#####\r\
@@ -108,3 +110,9 @@ add dont-require-permissions=no name=SendBackup policy=\
     \n:delay 5s;\r\
     \n/file remove backup.backup;\r\
     \n/file remove backup.rsc;"
+add dont-require-permissions=no name="TelegramSetings " owner=404NotFound \
+    policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    source=":global BotId \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx\";\
+    \r\
+    \n:global ChatId \"xxxxxx\";"
+

@@ -1,8 +1,9 @@
 #####
 # telegram setings 
 #####
-:local BotId "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
-:local ChatId "xxxxxx";
+/system script run TelegramSetings;
+:global BotId;
+:global ChatId;
 #####
 # router info
 #####
