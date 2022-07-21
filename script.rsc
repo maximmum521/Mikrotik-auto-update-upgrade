@@ -12,8 +12,7 @@ add dont-require-permissions=no name=WakeUp policy=\
     \n#####\r\
     \n# settings\r\
     \n#####\r\
-    \n:local Tag \"WakeUp\"\r\
-    \n/system script run TelegramSetings;\r\
+    \n/system script run ScriptSetings;\r\
     \n:global BotId;\r\
     \n:global ChatId;\r\
     \n:local Current [/system routerboard get current-firmware];\r\
@@ -39,7 +38,7 @@ add dont-require-permissions=no name=Update policy=\
     ####\r\
     \n# telegram setings \r\
     \n#####\r\
-    \n/system script run TelegramSetings;\r\
+    \n/system script run ScriptSetings;\r\
     \n:global BotId;\r\
     \n:global ChatId;\r\
     \n#####\r\
@@ -94,7 +93,8 @@ add dont-require-permissions=no name=SendBackup policy=\
     ####\r\
     \n# e-mail setings\r\
     \n#####\r\
-    \n:local Mail xxxxxxxxxxxxxxx;\r\
+    \n /system script run ScriptSetings;\r\
+    \n:global Mail;\r\
     \n:global BackText;\r\
     \n#####\r\
     \n# job\r\
@@ -110,9 +110,8 @@ add dont-require-permissions=no name=SendBackup policy=\
     \n:delay 5s;\r\
     \n/file remove backup.backup;\r\
     \n/file remove backup.rsc;"
-add dont-require-permissions=no name="TelegramSetings " owner=404NotFound \
-    policy=ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
-    source=":global BotId \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx\";\
-    \r\
-    \n:global ChatId \"xxxxxx\";"
-
+add dont-require-permissions=no name=ScriptSetings policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
+    global BotId \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx\";\r\
+    \n:global ChatId \"xxxxxx\";\r\
+    \n:global Mail xxxxxxxxxxxxxxx;"

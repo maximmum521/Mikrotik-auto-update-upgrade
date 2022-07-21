@@ -1,7 +1,8 @@
 #####
 # e-mail setings
 #####
-:local Mail xxxxxxxxxxxxxxx;
+/system script run ScriptSetings;
+:global Mail;
 :global BackText;
 #####
 # job

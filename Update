@@ -1,7 +1,7 @@
 #####
 # telegram setings 
 #####
-/system script run TelegramSetings;
+/system script run ScriptSetings;
 :global BotId;
 :global ChatId;
 #####

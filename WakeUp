@@ -2,8 +2,7 @@
 #####
 # settings
 #####
-:local Tag "WakeUp"
-/system script run TelegramSetings;
+/system script run ScriptSetings;
 :global BotId;
 :global ChatId;
 :local Current [/system routerboard get current-firmware];
