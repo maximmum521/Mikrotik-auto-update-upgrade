@@ -110,8 +110,3 @@ add dont-require-permissions=no name=SendBackup policy=\
     \n:delay 5s;\r\
     \n/file remove backup.backup;\r\
     \n/file remove backup.rsc;"
-add dont-require-permissions=no name=ScriptSetings policy=\
-    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
-    global BotId \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxx\";\r\
-    \n:global ChatId \"xxxxxx\";\r\
-    \n:global Mail xxxxxxxxxxxxxxx;"
