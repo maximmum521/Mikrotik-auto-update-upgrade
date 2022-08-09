@@ -3,13 +3,16 @@
 ### Automate install from console 
 
 ```
-/tool fetch url="https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script.rsc"
+/tool fetch url="https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/install.rsc"
 ```
 ```
-import script.rsc
+import install.rsc
 ```
 ```
-/file remove script.rsc
+/system/script/run install
+```
+```
+/file remove install.rsc
 ```  
 
 ### Setings script
