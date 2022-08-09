@@ -4,6 +4,7 @@
 /system script run ScriptSetings;
 :global BotId;
 :global ChatId;
+:global sendbackup;
 #####
 # router info
 #####
@@ -38,8 +39,10 @@
 #####
 :if ("New version is available" = $Stat ) do={
 	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NeedUpdate"	
+	:if ( $sendbackup = "yes") do={
 	:global BackText "UPDATE PACKAGE RUN BACKUP";
 	/system script run SendBackup;
+	};
 	/system package update install;
 } else={
 	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NoNeedUpdate"

@@ -2,9 +2,11 @@
 #####
 # settings
 #####
+:local Tag "WakeUp"
 /system script run ScriptSetings;
 :global BotId;
 :global ChatId;
+:global wakeup;
 :local Current [/system routerboard get current-firmware];
 :local Upgrade [/system routerboard get upgrade-firmware];
 #####
@@ -15,7 +17,8 @@
   /system script run SendBackup;
   /system routerboard upgrade;
   /system reboot;
-  } else={
+  }; 
+:if ( $wakeup = "yes" ) do={
   /tool fetch url="https://api.telegram.org/bot$BotId/sendMessage\?chat_id=$ChatId&text=\
   $[/system identity get name] \
   %0a$[/system routerboard get model] \

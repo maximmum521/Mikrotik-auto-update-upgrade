@@ -12,9 +12,11 @@ add dont-require-permissions=no name=WakeUp policy=\
     \n#####\r\
     \n# settings\r\
     \n#####\r\
+    \n:local Tag \"WakeUp\"\r\
     \n/system script run ScriptSetings;\r\
     \n:global BotId;\r\
     \n:global ChatId;\r\
+    \n:global wakeup;\r\
     \n:local Current [/system routerboard get current-firmware];\r\
     \n:local Upgrade [/system routerboard get upgrade-firmware];\r\
     \n#####\r\
@@ -25,7 +27,8 @@ add dont-require-permissions=no name=WakeUp policy=\
     \n  /system script run SendBackup;\r\
     \n  /system routerboard upgrade;\r\
     \n  /system reboot;\r\
-    \n  } else={\r\
+    \n  }; \r\
+    \n:if ( \$wakeup = \"yes\" ) do={\r\
     \n  /tool fetch url=\"https://api.telegram.org/bot\$BotId/sendMessage\\\?c\
     hat_id=\$ChatId&text=\\\r\
     \n  \$[/system identity get name] \\\r\
@@ -41,6 +44,7 @@ add dont-require-permissions=no name=Update policy=\
     \n/system script run ScriptSetings;\r\
     \n:global BotId;\r\
     \n:global ChatId;\r\
+    \n:global sendbackup;\r\
     \n#####\r\
     \n# router info\r\
     \n#####\r\
@@ -75,25 +79,27 @@ add dont-require-permissions=no name=Update policy=\
     \n# MAIN SCRIPT\r\
     \n#####\r\
     \n:if (\"New version is available\" = \$Stat ) do={\r\
-    \n\t\$sendFunc ChatId=[\$ChatId] BotId=[\$BotId] Model=[\$Model] Stat=[\$S\
-    tat] CurrentVer=[\$CurrentVer] NewVer=[\$NewVer] CurrentFirmware=[\$Curren\
-    tFirmware] UpgradeFirmware=[\$UpgradeFirmware] Factory=[\$Factory] Tag=[\$\
-    Tag] TagStat=\"%23NeedUpdate\"\t\r\
+    \n\t\$sendFunc ChatId=[\$ChatId] BotId=[\$BotId] Name=[\$Name] Model=[\$Mo\
+    del] Stat=[\$Stat] CurrentVer=[\$CurrentVer] NewVer=[\$NewVer] CurrentFirm\
+    ware=[\$CurrentFirmware] UpgradeFirmware=[\$UpgradeFirmware] Factory=[\$Fa\
+    ctory] Tag=[\$Tag] TagStat=\"%23NeedUpdate\"\t\r\
+    \n\t:if ( \$sendbackup = \"yes\") do={\r\
     \n\t:global BackText \"UPDATE PACKAGE RUN BACKUP\";\r\
     \n\t/system script run SendBackup;\r\
+    \n\t};\r\
     \n\t/system package update install;\r\
     \n} else={\r\
-    \n\t\$sendFunc ChatId=[\$ChatId] BotId=[\$BotId] Model=[\$Model] Stat=[\$S\
-    tat] CurrentVer=[\$CurrentVer] NewVer=[\$NewVer] CurrentFirmware=[\$Curren\
-    tFirmware] UpgradeFirmware=[\$UpgradeFirmware] Factory=[\$Factory] Tag=[\$\
-    Tag] TagStat=\"%23NoNeedUpdate\"\r\
+    \n\t\$sendFunc ChatId=[\$ChatId] BotId=[\$BotId] Name=[\$Name] Model=[\$Mo\
+    del] Stat=[\$Stat] CurrentVer=[\$CurrentVer] NewVer=[\$NewVer] CurrentFirm\
+    ware=[\$CurrentFirmware] UpgradeFirmware=[\$UpgradeFirmware] Factory=[\$Fa\
+    ctory] Tag=[\$Tag] TagStat=\"%23NoNeedUpdate\"\r\
     \n}"
 add dont-require-permissions=no name=SendBackup policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="#\
     ####\r\
     \n# e-mail setings\r\
     \n#####\r\
-    \n /system script run ScriptSetings;\r\
+    \n/system script run ScriptSetings;\r\
     \n:global Mail;\r\
     \n:global BackText;\r\
     \n#####\r\
@@ -110,3 +116,4 @@ add dont-require-permissions=no name=SendBackup policy=\
     \n:delay 5s;\r\
     \n/file remove backup.backup;\r\
     \n/file remove backup.rsc;"
+
