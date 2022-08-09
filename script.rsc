@@ -7,9 +7,8 @@ add interval=1w name=Update on-event="/system script run Update " policy=\
     start-date=jan/17/2022 start-time=10:00:00
 /system script
 add dont-require-permissions=no name=WakeUp policy=\
-    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
-    delay 120s;\r\
-    \n#####\r\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="#\
+    ####\r\
     \n# settings\r\
     \n#####\r\
     \n:local Tag \"WakeUp\"\r\
@@ -17,18 +16,23 @@ add dont-require-permissions=no name=WakeUp policy=\
     \n:global BotId;\r\
     \n:global ChatId;\r\
     \n:global wakeup;\r\
+    \n:global sendbackup;\r\
     \n:local Current [/system routerboard get current-firmware];\r\
     \n:local Upgrade [/system routerboard get upgrade-firmware];\r\
     \n#####\r\
     \n# run\r\
     \n#####\r\
     \n:if (\$Current != \$Upgrade) do={\r\
+    \n  :if ( \$sendbackup = \"yes\") do={\r\
+    \n  :delay 120s;\r\
     \n  :global BackText \"UPGRADE FIRMWARE RUN BACKUP\";\r\
     \n  /system script run SendBackup;\r\
+    \n  };\r\
     \n  /system routerboard upgrade;\r\
     \n  /system reboot;\r\
     \n  }; \r\
     \n:if ( \$wakeup = \"yes\" ) do={\r\
+    \n  :delay 120s;\r\
     \n  /tool fetch url=\"https://api.telegram.org/bot\$BotId/sendMessage\\\?c\
     hat_id=\$ChatId&text=\\\r\
     \n  \$[/system identity get name] \\\r\
@@ -116,4 +120,3 @@ add dont-require-permissions=no name=SendBackup policy=\
     \n:delay 5s;\r\
     \n/file remove backup.backup;\r\
     \n/file remove backup.rsc;"
-

@@ -117,4 +117,5 @@ add dont-require-permissions=no name=install policy=\
     \n:import script.rsc;\r\
     \n:delay 2s;\r\
     \n/file remove script.rsc;\r\
-    \n/file remove install.rsc;"
+    \n/file remove install.rsc;\r\
+    \n/system script remove install;"

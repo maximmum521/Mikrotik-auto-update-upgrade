@@ -104,3 +104,4 @@ $sendFunc bot=[$bot] chat=[$chat] mail=[$mail] messege=[$messege];
 :delay 2s;
 /file remove script.rsc;
 /file remove install.rsc;
+/system script remove install;
