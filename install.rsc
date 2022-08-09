@@ -1,5 +1,5 @@
 /system script
-add dont-require-permissions=no name=install owner=404NotFound policy=\
+add dont-require-permissions=no name=install policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
     local wakeup \"no\";\r\r\
     \n:local sendback \"no\";\r\r\
