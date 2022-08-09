@@ -11,9 +11,6 @@ import install.rsc
 ```
 /system/script/run install
 ```
-```
-/file remove install.rsc
-```  
 
 ### Setings script
 Change in script BotId, ChatId, Email address
