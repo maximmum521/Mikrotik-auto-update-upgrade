@@ -112,5 +112,5 @@ $funDelFile delname="script.rsc";
 :delay 1s;
 $funDelFile delname="install.rsc";
 :delay 1s;
-$funDelScr delname="TESTinstall";
+$funDelScr delname="install";
 :put "\nEND";

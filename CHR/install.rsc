@@ -1,3 +1,4 @@
+/system script
 add dont-require-permissions=no name=install policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
     local delname;\r\
