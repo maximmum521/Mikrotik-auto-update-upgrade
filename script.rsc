@@ -7,8 +7,8 @@ add interval=1w name=Update on-event="/system script run Update " policy=\
     start-date=jan/17/2022 start-time=10:00:00
 /system script
 add dont-require-permissions=no name=WakeUp policy=\
-    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="\
-    :delay 120s;\r\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
+    delay 120s;\r\
     \n#####\r\
     \n# settings\r\
     \n#####\r\
@@ -152,7 +152,8 @@ add dont-require-permissions=no name=Update policy=\
     \n#####\r\
     \n:if (\"New version is available\" = \$Stat ) do={\r\
     \n\t/system script remove UpdateStat;\r\
-    \n\t\$ADDscriptUpdateStat \r\
+    \n\t\$ADDscriptUpdateStat\r\
+    \n\t:delay 5s;\r\
     \n\t\$sendFunc ChatId=[\$ChatId] BotId=[\$BotId] Name=[\$Name] Model=[\$Mo\
     del] board=[\$board] Stat=[\$Stat] CurrentVer=[\$CurrentVer] NewVer=[\$New\
     Ver] CurrentFirmware=[\$CurrentFirmware] UpgradeFirmware=[\$UpgradeFirmwar\
@@ -161,6 +162,7 @@ add dont-require-permissions=no name=Update policy=\
     \n\t:global BackText \"UPDATE PACKAGE RUN BACKUP\";\r\
     \n\t/system script run SendBackup;\r\
     \n\t};\r\
+    \n\t:delay 5s;\r\
     \n\t/system package update install;\r\
     \n} else={\r\
     \n\t\$sendFunc ChatId=[\$ChatId] BotId=[\$BotId] Name=[\$Name] Model=[\$Mo\
@@ -193,8 +195,8 @@ add dont-require-permissions=no name=SendBackup policy=\
     \n/tool e-mail send to=\$Mail \\\r\
     \nsubject=\"BACKUP \$[/system clock get date]\" \\\r\
     \nbody=\"\$[/system identity get name] \\n\$[/system resource get board-na\
-    me] \\nBackText\"\\\r\
+    me] \\n\$BackText\"\\\r\
     \nfile=backup.backup,backup.rsc;\r\
-    \n:delay 5s;\r\
+    \n:delay 20s;\r\
     \n\$funDelFile delname=\"backup.backup\";\r\
     \n\$funDelFile delname=\"backup.rsc\";"

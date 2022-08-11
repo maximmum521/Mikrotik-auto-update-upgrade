@@ -22,6 +22,6 @@
 subject="BACKUP $[/system clock get date]" \
 body="$[/system identity get name] \n$[/system resource get board-name] \n$BackText"\
 file=backup.backup,backup.rsc;
-:delay 5s;
+:delay 20s;
 $funDelFile delname="backup.backup";
 $funDelFile delname="backup.rsc";

@@ -46,12 +46,14 @@
 #####
 :if ("New version is available" = $Stat ) do={
 	/system script remove UpdateStat;
-	$ADDscriptUpdateStat 
+	$ADDscriptUpdateStat
+	:delay 5s;
 	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] board=[$board] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NeedUpdate"
 	:if ( $sendbackup = "yes") do={
 	:global BackText "UPDATE PACKAGE RUN BACKUP";
 	/system script run SendBackup;
 	};
+	:delay 5s;
 	/system package update install;
 } else={
 	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] board=[$board] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NoNeedUpdate"
