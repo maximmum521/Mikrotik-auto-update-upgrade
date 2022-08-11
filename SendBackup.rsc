@@ -20,7 +20,7 @@
 :delay 5s;
 /tool e-mail send to=$Mail \
 subject="BACKUP $[/system clock get date]" \
-body="$[/system identity get name] \n$[/system resource get board-name] \n$BackText"\
+body="$[/system identity get name] \n$[/system resource get board-name] \n$[/system routerboard get model] \n$BackText"\
 file=backup.backup,backup.rsc;
 :delay 20s;
 $funDelFile delname="backup.backup";

@@ -195,7 +195,7 @@ add dont-require-permissions=no name=SendBackup policy=\
     \n/tool e-mail send to=\$Mail \\\r\
     \nsubject=\"BACKUP \$[/system clock get date]\" \\\r\
     \nbody=\"\$[/system identity get name] \\n\$[/system resource get board-na\
-    me] \\n\$BackText\"\\\r\
+    me] \\n\$[/system routerboard get model] \\n\$BackText\"\\\r\
     \nfile=backup.backup,backup.rsc;\r\
     \n:delay 20s;\r\
     \n\$funDelFile delname=\"backup.backup\";\r\
