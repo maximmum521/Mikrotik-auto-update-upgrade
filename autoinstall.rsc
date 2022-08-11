@@ -1,5 +1,7 @@
+:local delname;
 :local wakeup "no";
 :local sendback "no";
+:local mail "NO";
 ##### make backup
 :local readinput do={:return};
 :put "\ndo you want make backup ??? [y or n] \n\r\ndefault set \"n\"\n";
@@ -14,40 +16,32 @@
 :local tmp [$readinput];
 };
 ##### remove old script
-:local tmp "tmp";
-:local tmp [/ system/script/find name="ScriptSetings"];
-:if ( $tmp != "tmp" ) do={
-/system script remove $tmp;
+:local funDelScr do={
+:local tmp [:len [/system/script/find name="$delname"]];
+:if ( $tmp > 0 ) do={
+:put "\n del script $delname";
+/system script remove $delname;
 };
-:local tmp "tmp";
-:local tmp [/ system/script/find name="SendBackup"];
-:if ( $tmp != "tmp" ) do={
-/system script remove $tmp;
 };
-:local tmp "tmp";
-:local tmp [/ system/script/find name="Update"];
-:if ( $tmp != "tmp" ) do={
-/system script remove $tmp;
-};
-:local tmp "tmp";
-:local tmp [/ system/script/find name="WakeUp"];
-:if ( $tmp != "tmp" ) do={
-/system script remove $tmp;
-};
+$funDelScr delname="ScriptSetings";
+$funDelScr delname="SendBackup";
+$funDelScr delname="Update";
+$funDelScr delname="WakeUp";
+$funDelScr delname="UpdateStat";
+$funDelScr delname="UpgradeStat";
 ##### remove old scheduler
-:local tmp "tmp";
-:local tmp [/ system/scheduler/find name="WakeUp"];
-:if ( $tmp != "tmp" ) do={
-/system scheduler remove $tmp;
+:local funDelSch do={
+:local tmp [:len [/system/scheduler/find name="$delname"]];
+:if ( $tmp > 0 ) do={
+:put "\n del scheduler $delname";
+/system scheduler remove $delname;
 };
-:local tmp "tmp";
-:local tmp [/ system/scheduler/find name="Update"];
-:if ( $tmp != "tmp" ) do={
-/system scheduler remove $tmp;
 };
+$funDelSch delname="WakeUp";
+$funDelSch delname="Update";
 ##### send wakeup 
 :local readinput do={:return};
-:put "\nsend wakeup messege [y or n] \n\r\ndefault set \"n\"\n";
+:put "\nsend wakeup messages [y or n] \n\r\ndefault set \"n\"\n";
 :local sendwake [$readinput];
 ##### send backup 
 :local readinput do={:return};
@@ -62,17 +56,20 @@
 :put "\nInsert a bot ID\n";
 :local bot [$readinput];
 ##### mail
+:if ("y" = $backmail or "Y" = $backmail) do={
+:set sendback "yes";
 :local readinput do={:return};
 :put "\nInsert a mail\n";
-:local mail [$readinput];
-##### test masseg
+:set mail [$readinput];
+};
+##### test messages
 :local readinput do={:return};
-:put "\nSend test messeg [y or n]\n\r\ndefault set \"n\"\n";
-:local testmesseg [$readinput];
-##### test messeg func
-:local messege "test messeg from MikroTik %0achatID $chat %0abotID $bot %0amail $mail";
+:put "\nSend test messages [y or n]\n\r\ndefault set \"n\"\n";
+:local testmessages [$readinput];
+##### test messages func
+:local messages "test messages from MikroTik %0achatID $chat %0abotID $bot %0amail $mail";
 :local sendFunc do={
-	/tool fetch url="https://api.telegram.org/bot$bot/sendMessage\?chat_id=$chat&text=$messege" keep-result=no;
+	/tool fetch url="https://api.telegram.org/bot$bot/sendMessage\?chat_id=$chat&text=$messages" keep-result=no;
 };
 ##### output
 :local outputFUNC do={
@@ -84,24 +81,45 @@
 :global BotId \"$bot\";\
 \r\n:global ChatId \"$chat\";\
 \r\n:global Mail \"$mail\";\
+\r\n:global sendbackupupgrade \"no\";\
 \r\n:global wakeup \"$wakeup\";\
 \r\n:global sendbackup \"$sendback\";"
+};
+#####
+:local ADDscriptFUNCup do={
+/system script add name=UpdateStat source="\
+\r\n:global updatestatus \"no\";"
+};
+#####
+:local ADDscriptUpgradeStat do={
+/system script add name=UpgradeStat source="\
+:global upgradestatus \"no\";"
+};
+##### del file
+:local funDelFile do={
+:local tmp [:len [/file/find name="$delname"]];
+:if ( $tmp > 0 ) do={
+:put "\n del file $delname";
+/file remove $delname;
+};
 };
 ##### run
 :if ("y" = $sendwake or "Y" = $sendwake) do={
 :set wakeup "yes";
 };
-:if ("y" = $backmail or "Y" = $backmail) do={
-:set sendback "yes";
-};
 $outputFUNC bot=[$bot] chat=[$chat] mail=[$mail];
 $ADDscriptFUNC bot=[$bot] chat=[$chat] mail=[$mail] wakeup=[$wakeup] sendback=[$sendback];
-:if ("y" = $testmesseg or "Y" = $testmesseg) do={
-$sendFunc bot=[$bot] chat=[$chat] mail=[$mail] messege=[$messege];
+$ADDscriptFUNCup;
+$ADDscriptUpgradeStat;
+:if ("y" = $testmessages or "Y" = $testmessages) do={
+$sendFunc bot=[$bot] chat=[$chat] mail=[$mail] messages=[$messages];
 };
 /tool fetch url="https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script.rsc";
 :import script.rsc;
 :delay 2s;
-/file remove script.rsc;
-/file remove install.rsc;
-/system script remove install;
+$funDelFile delname="script.rsc";
+:delay 1s;
+$funDelFile delname="install.rsc";
+:delay 1s;
+$funDelScr delname="install";
+:put "\nEND";

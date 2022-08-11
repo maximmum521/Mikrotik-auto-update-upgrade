@@ -105,7 +105,7 @@ $ADDscriptFUNCup;
 :if ("y" = $testmessages or "Y" = $testmessages) do={
 $sendFunc bot=[$bot] chat=[$chat] mail=[$mail] messages=[$messages];
 };
-/tool fetch url="https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/script.rsc";
+/tool fetch url="https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/CHR/script.rsc";
 :import script.rsc;
 :delay 2s;
 $funDelFile delname="script.rsc";

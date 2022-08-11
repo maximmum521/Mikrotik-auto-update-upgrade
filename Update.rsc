@@ -11,6 +11,7 @@
 :local Tag "%23UpdateRouterOS";
 :local TagStat;
 :local Name [/system identity get name];
+:local board [/system resource get board-name];
 :local Cheking [/system package update check-for-updates as-value];
 :local Stat ($Cheking -> "status");
 :local CurrentVer ($Cheking -> "installed-version");
@@ -26,6 +27,7 @@
 	/tool fetch url="https://api.telegram.org/bot$BotId/sendMessage\?chat_id=$ChatId&text=\
 	$Name\
 	%0a$Model\
+	%0a$board\
 	%0a$Stat\
 	%0aCurrent version=$CurrentVer\
 	%0aAvailable version=$NewVer\  
@@ -35,15 +37,22 @@
 	%0a$Tag $TagStat" keep-result=no;
 };
 #####
-# MAIN SCRIPT
+:local ADDscriptUpdateStat do={
+/system script add name=UpdateStat source="\
+:global updatestatus \"yes\";"
+};
+#####
+# run
 #####
 :if ("New version is available" = $Stat ) do={
-	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NeedUpdate"	
+	/system script remove UpdateStat;
+	$ADDscriptUpdateStat 
+	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] board=[$board] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NeedUpdate"
 	:if ( $sendbackup = "yes") do={
 	:global BackText "UPDATE PACKAGE RUN BACKUP";
 	/system script run SendBackup;
 	};
 	/system package update install;
 } else={
-	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NoNeedUpdate"
+	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] board=[$board] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NoNeedUpdate"
 }

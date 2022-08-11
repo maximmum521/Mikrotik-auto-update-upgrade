@@ -38,7 +38,7 @@
   :set Tag "UPDATE_FAILED";
   };
   /system script remove UpdateStat;
-  $ADDscriptUpdateStat 
+  $ADDscriptUpdateStat;
   $sendFunc text=[$text] BotId=[$BotId] ChatId=[$ChatId] Tag=[$Tag]
   } else={
 :if ( $wakeup = "yes" ) do={
