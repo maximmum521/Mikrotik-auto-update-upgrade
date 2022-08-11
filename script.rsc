@@ -7,7 +7,7 @@ add interval=1w name=Update on-event="/system script run Update " policy=\
     start-date=jan/17/2022 start-time=10:00:00
 /system script
 add dont-require-permissions=no name=WakeUp policy=\
-    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="#\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source="\
     :delay 120s;\r\
     \n#####\r\
     \n# settings\r\

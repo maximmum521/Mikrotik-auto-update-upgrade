@@ -1,8 +1,10 @@
 /system script
 add dont-require-permissions=no name=install policy=\
     ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon source=":\
-    local wakeup \"no\";\r\
+    local delname;\r\
+    \n:local wakeup \"no\";\r\
     \n:local sendback \"no\";\r\
+    \n:local mail \"NO\";\r\
     \n##### make backup\r\
     \n:local readinput do={:return};\r\
     \n:put \"\\ndo you want make backup \?\?\? [y or n] \\n\\r\\ndefault set \
@@ -19,41 +21,33 @@ add dont-require-permissions=no name=install policy=\
     \n:local tmp [\$readinput];\r\
     \n};\r\
     \n##### remove old script\r\
-    \n:local tmp \"tmp\";\r\
-    \n:local tmp [/ system/script/find name=\"ScriptSetings\"];\r\
-    \n:if ( \$tmp != \"tmp\" ) do={\r\
-    \n/system script remove \$tmp;\r\
+    \n:local funDelScr do={\r\
+    \n:local tmp [:len [/system/script/find name=\"\$delname\"]];\r\
+    \n:if ( \$tmp > 0 ) do={\r\
+    \n:put \"\\n del script \$delname\";\r\
+    \n/system script remove \$delname;\r\
     \n};\r\
-    \n:local tmp \"tmp\";\r\
-    \n:local tmp [/ system/script/find name=\"SendBackup\"];\r\
-    \n:if ( \$tmp != \"tmp\" ) do={\r\
-    \n/system script remove \$tmp;\r\
     \n};\r\
-    \n:local tmp \"tmp\";\r\
-    \n:local tmp [/ system/script/find name=\"Update\"];\r\
-    \n:if ( \$tmp != \"tmp\" ) do={\r\
-    \n/system script remove \$tmp;\r\
-    \n};\r\
-    \n:local tmp \"tmp\";\r\
-    \n:local tmp [/ system/script/find name=\"WakeUp\"];\r\
-    \n:if ( \$tmp != \"tmp\" ) do={\r\
-    \n/system script remove \$tmp;\r\
-    \n};\r\
+    \n\$funDelScr delname=\"ScriptSetings\";\r\
+    \n\$funDelScr delname=\"SendBackup\";\r\
+    \n\$funDelScr delname=\"Update\";\r\
+    \n\$funDelScr delname=\"WakeUp\";\r\
+    \n\$funDelScr delname=\"UpdateStat\";\r\
+    \n\$funDelScr delname=\"UpgradeStat\";\r\
     \n##### remove old scheduler\r\
-    \n:local tmp \"tmp\";\r\
-    \n:local tmp [/ system/scheduler/find name=\"WakeUp\"];\r\
-    \n:if ( \$tmp != \"tmp\" ) do={\r\
-    \n/system scheduler remove \$tmp;\r\
+    \n:local funDelSch do={\r\
+    \n:local tmp [:len [/system/scheduler/find name=\"\$delname\"]];\r\
+    \n:if ( \$tmp > 0 ) do={\r\
+    \n:put \"\\n del scheduler \$delname\";\r\
+    \n/system scheduler remove \$delname;\r\
     \n};\r\
-    \n:local tmp \"tmp\";\r\
-    \n:local tmp [/ system/scheduler/find name=\"Update\"];\r\
-    \n:if ( \$tmp != \"tmp\" ) do={\r\
-    \n/system scheduler remove \$tmp;\r\
     \n};\r\
+    \n\$funDelSch delname=\"WakeUp\";\r\
+    \n\$funDelSch delname=\"Update\";\r\
     \n##### send wakeup \r\
     \n:local readinput do={:return};\r\
-    \n:put \"\\nsend wakeup messege [y or n] \\n\\r\\ndefault set \\\"n\\\"\\n\
-    \";\r\
+    \n:put \"\\nsend wakeup messages [y or n] \\n\\r\\ndefault set \\\"n\\\"\\\
+    n\";\r\
     \n:local sendwake [\$readinput];\r\
     \n##### send backup \r\
     \n:local readinput do={:return};\r\
@@ -69,20 +63,23 @@ add dont-require-permissions=no name=install policy=\
     \n:put \"\\nInsert a bot ID\\n\";\r\
     \n:local bot [\$readinput];\r\
     \n##### mail\r\
+    \n:if (\"y\" = \$backmail or \"Y\" = \$backmail) do={\r\
+    \n:set sendback \"yes\";\r\
     \n:local readinput do={:return};\r\
     \n:put \"\\nInsert a mail\\n\";\r\
-    \n:local mail [\$readinput];\r\
-    \n##### test masseg\r\
+    \n:set mail [\$readinput];\r\
+    \n};\r\
+    \n##### test messages\r\
     \n:local readinput do={:return};\r\
-    \n:put \"\\nSend test messeg [y or n]\\n\\r\\ndefault set \\\"n\\\"\\n\";\
-    \r\
-    \n:local testmesseg [\$readinput];\r\
-    \n##### test messeg func\r\
-    \n:local messege \"test messeg from MikroTik %0achatID \$chat %0abotID \$b\
-    ot %0amail \$mail\";\r\
+    \n:put \"\\nSend test messages [y or n]\\n\\r\\ndefault set \\\"n\\\"\\n\"\
+    ;\r\
+    \n:local testmessages [\$readinput];\r\
+    \n##### test messages func\r\
+    \n:local messages \"test messages from MikroTik %0achatID \$chat %0abotID \
+    \$bot %0amail \$mail\";\r\
     \n:local sendFunc do={\r\
     \n\t/tool fetch url=\"https://api.telegram.org/bot\$bot/sendMessage\\\?cha\
-    t_id=\$chat&text=\$messege\" keep-result=no;\r\
+    t_id=\$chat&text=\$messages\" keep-result=no;\r\
     \n};\r\
     \n##### output\r\
     \n:local outputFUNC do={\r\
@@ -95,27 +92,48 @@ add dont-require-permissions=no name=install policy=\
     \n:global BotId \\\"\$bot\\\";\\\r\
     \n\\r\\n:global ChatId \\\"\$chat\\\";\\\r\
     \n\\r\\n:global Mail \\\"\$mail\\\";\\\r\
+    \n\\r\\n:global sendbackupupgrade \\\"no\\\";\\\r\
     \n\\r\\n:global wakeup \\\"\$wakeup\\\";\\\r\
     \n\\r\\n:global sendbackup \\\"\$sendback\\\";\"\r\
+    \n};\r\
+    \n#####\r\
+    \n:local ADDscriptFUNCup do={\r\
+    \n/system script add name=UpdateStat source=\"\\\r\
+    \n\\r\\n:global updatestatus \\\"no\\\";\"\r\
+    \n};\r\
+    \n#####\r\
+    \n:local ADDscriptUpgradeStat do={\r\
+    \n/system script add name=UpgradeStat source=\"\\\r\
+    \n:global upgradestatus \\\"no\\\";\"\r\
+    \n};\r\
+    \n##### del file\r\
+    \n:local funDelFile do={\r\
+    \n:local tmp [:len [/file/find name=\"\$delname\"]];\r\
+    \n:if ( \$tmp > 0 ) do={\r\
+    \n:put \"\\n del file \$delname\";\r\
+    \n/file remove \$delname;\r\
+    \n};\r\
     \n};\r\
     \n##### run\r\
     \n:if (\"y\" = \$sendwake or \"Y\" = \$sendwake) do={\r\
     \n:set wakeup \"yes\";\r\
     \n};\r\
-    \n:if (\"y\" = \$backmail or \"Y\" = \$backmail) do={\r\
-    \n:set sendback \"yes\";\r\
-    \n};\r\
     \n\$outputFUNC bot=[\$bot] chat=[\$chat] mail=[\$mail];\r\
     \n\$ADDscriptFUNC bot=[\$bot] chat=[\$chat] mail=[\$mail] wakeup=[\$wakeup\
     ] sendback=[\$sendback];\r\
-    \n:if (\"y\" = \$testmesseg or \"Y\" = \$testmesseg) do={\r\
-    \n\$sendFunc bot=[\$bot] chat=[\$chat] mail=[\$mail] messege=[\$messege];\
-    \r\
+    \n\$ADDscriptFUNCup;\r\
+    \n\$ADDscriptUpgradeStat;\r\
+    \n:if (\"y\" = \$testmessages or \"Y\" = \$testmessages) do={\r\
+    \n\$sendFunc bot=[\$bot] chat=[\$chat] mail=[\$mail] messages=[\$messages]\
+    ;\r\
     \n};\r\
     \n/tool fetch url=\"https://raw.githubusercontent.com/maximmum521/Mikrotik\
     -auto-update-upgrade/main/script.rsc\";\r\
     \n:import script.rsc;\r\
     \n:delay 2s;\r\
-    \n/file remove script.rsc;\r\
-    \n/file remove install.rsc;\r\
-    \n/system script remove install;"
+    \n\$funDelFile delname=\"script.rsc\";\r\
+    \n:delay 1s;\r\
+    \n\$funDelFile delname=\"install.rsc\";\r\
+    \n:delay 1s;\r\
+    \n\$funDelScr delname=\"install\";\r\
+    \n:put \"\\nEND\";"
