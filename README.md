@@ -3,7 +3,7 @@
 ### Automate install from console 
 
 ```
-/tool fetch url="https://raw.githubusercontent.com/maximmum521/Mikrotik-auto-update-upgrade/main/install.rsc"
+/tool fetch url="https://github.com/maximmum521/Mikrotik-auto-update-upgrade/blob/alfa-v0.1/install.rsc"
 ```
 ```
 import install.rsc
