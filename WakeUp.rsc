@@ -1,3 +1,4 @@
+:log info "Run script WakeUp"
 :delay 120s;
 #####
 # settings
@@ -60,30 +61,30 @@
    :delay 10s;
    :if ($Current != $Upgrade) do={
     :if ( $sendbackupupgrade = "yes") do={
-	  :global BackText "UPGRADE FIRMWARE RUN BACKUP";
-	  /system script run SendBackup;
-	  :delay 2s;
-	};
+      :global BackText "UPGRADE FIRMWARE RUN BACKUP";
+      /system script run SendBackup;
+      :delay 2s;
+    };
    /system script remove UpgradeStat;
    $ADDscriptUpgradeStatYES;
    /system routerboard upgrade;
    /system reboot;
   }; 
 } else={
-	:if ( $upgradestatus = "yes" ) do={
-	 :if ($Current != $Upgrade) do={
-	  :set text "ROUTER WAKE UP %0aUPGRADE FAILED"   
+    :if ( $upgradestatus = "yes" ) do={
+     :if ($Current != $Upgrade) do={
+      :set text "ROUTER WAKE UP %0aUPGRADE FAILED"   
       :set Tag "UPGRADE_FAILED";
-	 } else={
-	  :set text "ROUTER WAKE UP %0aUPGRADE OK"   
+     } else={
+      :set text "ROUTER WAKE UP %0aUPGRADE OK"   
       :set Tag "UPGRADE_OK";
-	  };
-	/system script remove UpgradeStat;
+      };
+    /system script remove UpgradeStat;
     $ADDscriptUpgradeStatNO;
-	$sendFunc text=[$text] BotId=[$BotId] ChatId=[$ChatId] Tag=[$Tag]
-	} else={
-	:if ( $wakeup = "yes" ) do={
-	$sendFunc text=[$text] BotId=[$BotId] ChatId=[$ChatId] Tag=[$Tag]
-	};	
-	};
+    $sendFunc text=[$text] BotId=[$BotId] ChatId=[$ChatId] Tag=[$Tag]
+    } else={
+    :if ( $wakeup = "yes" ) do={
+    $sendFunc text=[$text] BotId=[$BotId] ChatId=[$ChatId] Tag=[$Tag]
+    };    
+    };
 };

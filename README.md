@@ -1,22 +1,21 @@
 # Mikrotik auto update upgrade
 
-### Automate install from console 
-
-```
-/tool fetch url="https://github.com/maximmum521/Mikrotik-auto-update-upgrade/blob/alfa-v0.1/install.rsc"
-```
-```
-import install.rsc
-```
-```
-/system/script/run install
-```
-
 ### Setings script
-Change in script BotId, ChatId, Email address
+Change in script ScriptSetings BotId, ChatId, Email address
 
 ```
 :global BotId "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 :global ChatId "xxxxxx";
 :global Mail xxxxxxxxxxxxxxx;
+```
+
+### Add Sheduler
+```
+/system scheduler
+add name=WakeUp on-event="/system script run WakeUp " policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    start-time=startup
+add interval=1w name=Update on-event="/system script run Update " policy=\
+    ftp,reboot,read,write,policy,test,password,sniff,sensitive,romon \
+    start-date=jan/17/2022 start-time=10:00:00
 ```

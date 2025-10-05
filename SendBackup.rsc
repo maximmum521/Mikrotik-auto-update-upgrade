@@ -1,27 +1,40 @@
+:log info "Run script SendBackup";
 #####
 # e-mail setings
 #####
-/system script run ScriptSetings;
 :global Mail;
-:global BackText;
+:local NameRSC "EXPORT_$[/system clock get date]";
+:local NameBACKUP "BACKUP_$[/system clock get date]";
+:global NameBACKUPfull "$NameBACKUP.backup";
+:global NameRSCfull "$NameRSC.rsc";
 #####
 :local funDelFile do={
 :local tmp [:len [/file/find name="$delname"]];
 :if ( $tmp > 0 ) do={
-:put "\n del file $delname";
+:log info "delete file $delname";
 /file remove $delname;
 };
 };
+
 #####
 # run
 #####
-/export file=backup;
-/system backup save name=backup;
-:delay 5s;
-/tool e-mail send to=$Mail \
-subject="BACKUP $[/system clock get date]" \
-body="$[/system identity get name] \n$[/system resource get board-name] \n$[/system routerboard get model] \n$BackText"\
-file=backup.backup,backup.rsc;
-:delay 20s;
-$funDelFile delname="backup.backup";
-$funDelFile delname="backup.rsc";
+/system sup-output name=supout.rif
+/export file=$NameRSC;
+/system backup save name=$NameBACKUP;
+:delay 10s;
+/tool e-mail send to=$Mail subject="BACKUP $[/system clock get date] $[/system identity get name]"\
+body="\
+BACKUP - $[/system identity get name] Date - $[/system clock get date]\n\n\
+Model - $[/system routerboard get model] Revision - $[/system routerboard get revision]\n\
+Board-name - $[/system resource get board-name]\n\ 
+Serial Number - $[/system routerboard get serial-number]\n\
+Factory-firmware - $[/system routerboard get factory-firmware]\n\
+Current-firmware - $[/system routerboard get current-firmware]\n\
+Upgrade-firmware - $[/system routerboard get upgrade-firmware]\
+"\
+file="$NameRSCfull,$NameBACKUPfull,supout.rif";
+:delay 10s;
+$funDelFile delname=$NameBACKUPfull;
+$funDelFile delname=$NameRSCfull;
+$funDelFile delname=supout.rif;

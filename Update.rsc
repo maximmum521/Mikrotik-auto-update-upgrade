@@ -10,6 +10,7 @@
 #####
 :local Tag "%23UpdateRouterOS";
 :local TagStat;
+:local TagMod [/system identity get name];
 :local Name [/system identity get name];
 :local board [/system resource get board-name];
 :local Cheking [/system package update check-for-updates as-value];
@@ -24,17 +25,18 @@
 # send status
 #####     
 :local sendFunc do={
-	/tool fetch url="https://api.telegram.org/bot$BotId/sendMessage\?chat_id=$ChatId&text=\
-	$Name\
-	%0a$Model\
-	%0a$board\
-	%0a$Stat\
-	%0aCurrent version=$CurrentVer\
-	%0aAvailable version=$NewVer\  
-	%0aCurrent firmware=$CurrentFirmware\
-	%0aUpgrade firmware=$UpgradeFirmware\
-	%0aFactory firmware=$Factory\ 
-	%0a$Tag $TagStat" keep-result=no;
+    :log info "Send Telegram notification" 
+    /tool fetch url="https://api.telegram.org/bot$BotId/sendMessage\?chat_id=$ChatId&text=\
+    $Name\
+    %0a$Model\
+    %0a$board\
+    %0a$Stat\
+    %0aCurrent version=$CurrentVer\
+    %0aAvailable version=$NewVer\  
+    %0aCurrent firmware=$CurrentFirmware\
+    %0aUpgrade firmware=$UpgradeFirmware\
+    %0aFactory firmware=$Factory\ 
+    %0a$Tag $TagStat $TagMod" keep-result=no;
 };
 #####
 :local ADDscriptUpdateStat do={
@@ -45,16 +47,18 @@
 # run
 #####
 :if ("New version is available" = $Stat ) do={
-	/system script remove UpdateStat;
-	$ADDscriptUpdateStat
-	:delay 5s;
-	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] board=[$board] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NeedUpdate"
-	:if ( $sendbackup = "yes") do={
-	:global BackText "UPDATE PACKAGE RUN BACKUP";
-	/system script run SendBackup;
-	};
-	:delay 5s;
-	/system package update install;
+    /system script remove UpdateStat;
+    $ADDscriptUpdateStat
+    :log info "New version is available" 
+    :delay 5s;
+    $sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] board=[$board] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NeedUpdate"
+    :if ( $sendbackup = "yes") do={
+    :global BackText "UPDATE PACKAGE RUN BACKUP";
+    /system script run SendBackup;
+    };
+    :delay 5s;
+    /system package update install;
 } else={
-	$sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] board=[$board] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NoNeedUpdate"
+    :log info "System is already up to date" 
+    $sendFunc ChatId=[$ChatId] BotId=[$BotId] Name=[$Name] Model=[$Model] board=[$board] Stat=[$Stat] CurrentVer=[$CurrentVer] NewVer=[$NewVer] CurrentFirmware=[$CurrentFirmware] UpgradeFirmware=[$UpgradeFirmware] Factory=[$Factory] Tag=[$Tag] TagStat="%23NoNeedUpdate"
 }
